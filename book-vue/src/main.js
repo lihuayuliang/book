@@ -5,11 +5,12 @@ import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/global.css'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
-
+Vue.prototype.$axios = axios
 new Vue({
   router,
   store,
