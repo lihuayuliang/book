@@ -34,7 +34,6 @@
     </el-row>
     <el-row id="pagination" >
       <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="pageNum"
           :page-size="pageSize"
@@ -48,6 +47,8 @@
 
 <script>
   import SearchBar from './SearchBar'
+  import global from "@/assets/global.js";
+
 
   export default {
     name: 'Books',
@@ -112,15 +113,11 @@
           }
         }
       },
-      handleSizeChange(pageSize) {
-        console.log(`每页 ${pageSize} 条`);
-        this.pageSize = pageSize
-        this.loadBooks ()
-      },
       handleCurrentChange(pageNum) {
         console.log(`当前页: ${pageNum}`);
-        this.pageNum = pageNum
-        this.loadBooks ()
+        global.setPageNum(pageNum)
+        debugger
+        this.$emit('SelectIndex',global.cagetoryId)
       },
     }
   }

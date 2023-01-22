@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import global from "@/assets/global.js";
 
    export default {
      name: 'SideMenu',
@@ -36,6 +37,9 @@
          })
        },
        handleSelect (index) {
+         global.setCategotyId(index)
+         global.setPageNum(1)
+         debugger
          this.$emit('indexSelect',index)
        }
      }

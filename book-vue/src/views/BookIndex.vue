@@ -8,7 +8,7 @@
       <SideMenu @indexSelect="listByCategory"></SideMenu>
     </el-aside>
     <el-main>
-      <books class="books-area" ref="booksArea" ></books>
+      <books class="books-area" ref="booksArea" @SelectIndex="listByCategory"></books>
     </el-main>
 <!--    在浏览最多上面添加-->
       <!--          展示5条浏览最多和收藏最多的书籍，显示图片和书籍名和价格和收藏数和浏览量-->
@@ -58,6 +58,7 @@
   import SideMenu from './SideMenu'
   import Books from './Books'
   import NavMenu from '../common/NavMenu'
+  import global from "@/assets/global.js";
 
   export default {
     name: 'AppLibrary',
@@ -78,7 +79,7 @@
       listByCategory (index) {
         debugger
         let data =new FormData();
-        data.append('pageNum',this.pageNum,);
+        data.append('pageNum',global.pageNum,);
         data.append('pageSize',this.pageSize);
         data.append('categoryId',parseInt(index));
         this.$axios({
@@ -89,7 +90,7 @@
           if (resp && resp.data.code === 200) {
             this.$refs.booksArea.books = resp.data.result.list
             this.$refs.booksArea.total = resp.data.result.total
-            this.updateDuration()
+            this.$refs.booksArea.updateDuration()
           }
         })
       },
@@ -113,16 +114,6 @@
           }
         })
       },
-      // handleSizeChange(pageSize) {
-      //   console.log(`每页 ${pageSize} 条`);
-      //   this.pageSize = pageSize
-      //   this.listByCategory ()
-      // },
-      // handleCurrentChange(pageNum) {
-      //   console.log(`当前页: ${pageNum}`);
-      //   this.pageNum = pageNum
-      //   this.listByCategory ()
-      // },
     }
   }
 </script>
