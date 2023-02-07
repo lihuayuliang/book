@@ -17,7 +17,7 @@
           <span id="pr">分类：{{item.category}}</span>
         </p>
         <p slot="content" style="width: 300px" class="abstract">详情：{{item.description}}</p>
-        <el-card style="width: 150px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
+        <el-card style="width: 150px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px;border-radius: 10px;box-shadow: 0 0 10px #ccc;" class="book"
                  bodyStyle="padding:10px" shadow="hover">
           <div class="cover">
             <img :src="item.imgUrl" alt="封面">

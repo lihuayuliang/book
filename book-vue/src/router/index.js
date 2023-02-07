@@ -1,25 +1,46 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import BookIndex from "@/views/BookIndex.vue";
-
+import BookIndex from "@/views/index/BookIndex.vue";
+import Publish from "@/views/publish/Publish.vue";
+import MyBook from "@/views/mybook/MyBook.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'BookIndex',
-    component: BookIndex
-  },
-  {
-    path: '/admin',
-    name: 'home',
-    component: HomeView  }
+    {
+        path: '/',
+        name: 'BookIndex',
+        component: BookIndex
+    },
+    {
+        path: '/publish',
+        name: 'publish',
+        component: Publish
+    },
+    {
+        path: '/mybook',
+        name: 'mybook',
+        component: MyBook
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/user/Login.vue')
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('@/views/user/Register.vue')
+    },
+    {
+        path: '/bookDetail',
+        name: 'BookDetail',
+        component: () => import('@/views/detail/BookDetail.vue')
+    }
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
 
 export default router

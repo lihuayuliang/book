@@ -13,6 +13,9 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
 Vue.prototype.$axios = axios
+axios.defaults.baseURL = 'http://localhost:9000/'
+// 设置图片访问的端口
+
 new Vue({
   router,
   store,

@@ -2,7 +2,7 @@
 
   <el-container >
     <el-header>
-      <nav-menu class="nav-menu" style="height: auto"></nav-menu>
+      <nav-menu class="nav-menu" style="height: auto" @searchbar="searchBook"></nav-menu>
     </el-header>
     <el-aside style="width: 200px;margin-top: 20px" >
       <SideMenu @indexSelect="listByCategory"></SideMenu>
@@ -12,12 +12,12 @@
     </el-main>
 <!--    在浏览最多上面添加-->
       <!--          展示5条浏览最多和收藏最多的书籍，显示图片和书籍名和价格和收藏数和浏览量-->
-      <div class="mostView-books">
+      <div class="mostView-books" style="">
         <span>浏览最多</span>
         <el-card class="box-card" v-for="book in mostViewedBooks" :key="book.id" :body-style="{ padding: '0px' }">
           <el-row>
             <el-col :span="8">
-              <img :src="book.imgUrl" style="width: 85%">
+              <img :src="book.imgUrl" style="width: 50px;height: 69px">
             </el-col>
             <el-col :span="16">
               <div id="book-size">
@@ -37,7 +37,7 @@
         <el-card class="box-card" v-for="book in mostCollectedBooks" :key="book.id" :body-style="{ padding: '0px' }">
           <el-row>
             <el-col :span="8">
-              <img :src="book.imgUrl" style="width: 85%">
+              <img :src="book.imgUrl" style="width: 50px;height: 69px">
             </el-col>
             <el-col :span="16">
               <div id="book-size">
@@ -57,8 +57,9 @@
 <script>
   import SideMenu from './SideMenu'
   import Books from './Books'
-  import NavMenu from '../common/NavMenu'
+  import NavMenu from '../../common/NavMenu'
   import global from "@/assets/global.js";
+  import {store} from "xijs";
 
   export default {
     name: 'AppLibrary',
@@ -72,10 +73,17 @@
       }
     },
     mounted: function () {
+      this.loadUserInfo()
       this.getMostViewedBooks()
       this.getMostCollectedBooks()
     },
     methods: {
+      searchBook(book){
+        debugger
+        this.$refs.booksArea.books = book.list
+        this.$refs.booksArea.total = book.total
+        this.$refs.booksArea.updateDuration()
+      },
       listByCategory (index) {
         debugger
         let data =new FormData();
@@ -114,6 +122,11 @@
           }
         })
       },
+    //   加载用户信息
+      loadUserInfo() {
+        let token=store.get("accessToken").value;
+        console.log(token);
+      }
     }
   }
 </script>

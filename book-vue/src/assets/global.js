@@ -1,5 +1,7 @@
 const cagetoryId= '0'
 const pageNum = '1'
+
+
 export default {
     cagetoryId,
     pageNum,
@@ -8,5 +10,6 @@ export default {
     },
     setPageNum(num){
         this.pageNum = num
-    }
+    },
+
 }

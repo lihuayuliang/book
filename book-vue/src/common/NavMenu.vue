@@ -17,18 +17,23 @@
         prefix-icon="el-icon-search"
         size="medium"
         style="width: 300px;position:absolute;margin-top: 12px;right: 18%"
-        v-model="keywords">
+        v-model="keywords" >
       </el-input>
-<!--      显示用户信息，以圆形格式显示头像图片-->
-      <el-dropdown style="position: absolute;right: 10%;margin-top: 10px">
-        <span class="el-dropdown-link">
-<!--          <img :src="global.user.imgUrl" style="width: 40px;height: 40px;border-radius: 50%">-->
-<!--          <span style="margin-left: 10px">{{global.user.name}}</span>-->
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+      <el-button
+        type="primary"
+        size="medium"
+        style="width: 100px;position:absolute;margin-top: 12px;right: 12%"
+        @click="searchBook">
+        搜索
+      </el-button>
+      <el-dropdown style="width:120px;cursor: pointer;position: absolute;right: 2%;">
+        <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="" @click="$router.push('/login')" style="width: 30px;height: 30px;border-radius: 50%;position: relative;top:13px;right: 5px"/>
+        <span>{{user.name}}</span><i class="el-icon-arrow-down" style="margin-left: 5px" ></i>
+        <el-dropdown-menu slot="dropdown" style="width: 100px; text-align: center">
+          <el-dropdown-item style="font-size: 14px; padding: 5px 0">个人信息</el-dropdown-item>
+          <el-dropdown-item style="font-size: 14px; padding: 5px 0">
+            <span style="text-decoration: none" >退出</span>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-menu>
@@ -36,17 +41,24 @@
 </template>
 
 <script>
+import global from "@/assets/global.js";
+import {store} from "xijs";
   export default {
     name: 'NavMenu',
     data () {
       return {
         navList: [
           {name: '/', navItem: '首页'},
-          {name: '/login', navItem: '管理中心'}
+          {name: '/mybook', navItem: '我的图书'},
+          {name: '/publish', navItem: '发布图书'},
         ],
         keywords: '',
         notic: [],
-        notices: []
+        notices: [],
+        user:{
+          name:this.name,
+          // imgUrl:this.imgUrl
+        },
       }
     },
     computed: {
@@ -64,8 +76,27 @@
     },
     mounted: function () {
       this.loadNotices()
+      this.isLogin()
     },
     methods:{
+      searchBook() {
+        debugger
+        this.$axios({
+          url: '/Books/search',
+          method: 'post',
+          params: {
+            key: this.keywords
+          }
+        }).then(response => {
+          if (response.status === 200) {
+            debugger
+            this.$emit('searchbar',response.data)
+          } else {
+            debugger
+            this.$message.error(response.data.message)
+          }
+        })
+      },
       loadNotices() {
         let i=0
         this.$axios.get('/notices').then(response => {
@@ -81,7 +112,31 @@
             this.notices = this.notic.slice(i, i+1)
           }, 10000)
         })
-      }
+      },
+    // 判断用户是否登录
+      isLogin() {
+          debugger
+        let token = store.get("accessToken").value
+        if (token !== null) {
+          this.$axios({
+            url: '/v1/user/me',
+            method: 'get',
+            params: {
+              accessToken : token
+            }
+        }).then(response => {
+          if (response.status === 200) {
+            this.user.name = response.data.nickname
+            // this.user.imgUrl = response.data.imgUrl
+          } else {
+            this.$message.error(response.data.message)
+          }
+        })
+        }
+      },
+
+
+
     }
   }
 </script>
