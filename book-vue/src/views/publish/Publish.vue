@@ -168,6 +168,7 @@ export default {
   width: 500px;
   height: 670px;
   margin: 0 auto;
+
   background-color: #fff;
   padding: 20px;
 }
