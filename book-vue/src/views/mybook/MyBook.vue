@@ -149,12 +149,12 @@ export default {
         //   查询我的图书
         queryBook() {
             let token = store.get("accessToken").value
+            let formData = new FormData();
+            formData.set('accessToken', token)
             this.$axios({
                 url: '/book/myBooks',
                 method: 'post',
-                params: {
-                    accessToken: token
-                }
+                data : formData
             }).then(resp => {
                 this.books = resp.data.result
             }).catch(err => {

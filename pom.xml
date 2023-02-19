@@ -26,6 +26,9 @@
     </properties>
     <modules>
         <module>book-portal</module>
+        <module>book-cart</module>
+        <module>book-order</module>
+        <module>book-book</module>
         <module>gateway</module>
         <module>book-client</module>
         <module>book-auth</module>
