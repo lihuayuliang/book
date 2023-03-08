@@ -167,4 +167,11 @@
   #book-size{
     font-size: 16px;
   }
+  .nav-menu{
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
 </style>

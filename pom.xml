@@ -35,7 +35,6 @@
         <module>book-sys</module>
         <module>book-commons</module>
         <module>book-search</module>
-        <module>kafka</module>
     </modules>
 
     <dependencies>

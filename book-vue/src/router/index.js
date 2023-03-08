@@ -33,7 +33,7 @@ const routes = [
         component: () => import('@/views/user/Register.vue')
     },
     {
-        path: '/bookDetail',
+        path: '/detail',
         name: 'BookDetail',
         component: () => import('@/views/detail/BookDetail.vue')
     },

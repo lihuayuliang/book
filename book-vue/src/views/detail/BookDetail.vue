@@ -3,15 +3,15 @@
     <div>
         <div style="display: flex; margin: 10px 0">
             <div style="width: 40%; ">
-                <el-image :src="goods.img" style="width: 100%;"></el-image>
+                <el-image :src="book.imgUrl" style="width: 100%;"></el-image>
             </div>
             <div style="margin-left: 10px; flex: 1">
                 <el-card>
                     <el-form label-width="80px">
-                        <el-form-item label="商品名称">{{ goods.name }}</el-form-item>
-                        <el-form-item label="商品描述">{{ goods.descpription }}</el-form-item>
-                        <el-form-item label="商品价格"><span style="color: red">{{ goods.price }}/{{ goods.unit }}</span></el-form-item>
-                        <el-form-item label="商品库存"><span>{{ goods.nums }}</span></el-form-item>
+                        <el-form-item label="商品名称">{{ book.name }}</el-form-item>
+                        <el-form-item label="商品描述">{{ book.descpription }}</el-form-item>
+                        <el-form-item label="商品价格"><span style="color: red">{{ book.price }}</span></el-form-item>
+                        <el-form-item label="商品库存"><span>{{ book.nums }}</span></el-form-item>
 
                         <div>
                             <el-input-number :value="1" size="medium" style="width: 150px" v-model="buyNum"></el-input-number>
@@ -44,30 +44,49 @@
 export default {
     name: "Detail",
     data() {
-        let goodsId = this.$route.query.id
+        let bookId = Number(this.$route.query.id)
         return {
             user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
-            goods: {},
-            goodsId: goodsId,
+            book: {},
+            bookId: bookId,
             buyNum: 1,
             comments: []
         }
     },
     created() {
-        this.request.get('/goods/' + this.goodsId).then(res => this.goods = res.data)
 
-        this.request.get('/orderItem/comment/' + this.goodsId).then(res => this.comments = res.data)
+        this.getBook()
+
+
+        // this.request.get('/orderItem/comment/' + this.bookId).then(res => this.comments = res.data)
     },
     methods: {
+        getBook(){
+            let data = new FormData;
+            data.set("bookId", this.bookId)
+            console.log(data)
+            console.log(this.bookId)
+            debugger
+            this.$axios({
+                method: "post",
+                url: "/book/getBookById",
+                data: data
+            }).then(res => {
+                debugger
+                this.book = res.data.result
+            }).catch(err => {
+                debugger
+            })
+        },
         addCart() {
-            this.request.post('/cart', { goodsId: this.goodsId, num: this.buyNum, userid:this.user.id }).then(res => {
+            this.request.post('/cart', { goodsId: this.bookId, num: this.buyNum, userid:this.user.id }).then(res => {
                 if (res.code === '200') {
                     this.$message.success('加入购物车成功')
                 } else {
                     this.$message.error(res.msg)
                 }
             })
-        }
+        },
     }
 }
 </script>

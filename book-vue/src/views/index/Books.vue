@@ -20,10 +20,10 @@
         <el-card style="width: 150px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px;border-radius: 10px;box-shadow: 0 0 10px #ccc;" class="book"
                  bodyStyle="padding:10px" shadow="hover">
           <div class="cover">
-            <img :src="item.imgUrl" alt="封面">
+            <img :src="item.imgUrl" alt="封面" @click="$router.push('/detail?id=' + item.id)">
           </div>
           <div class="info">
-            <div class="title">
+            <div class="title" @click="$router.push('/detail?id=' + item.id)">
               <a href="">{{item.name}}</a>
             </div>
           </div>

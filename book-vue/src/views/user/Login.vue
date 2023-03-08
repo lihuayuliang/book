@@ -60,7 +60,7 @@ export default {
         //将从授权服务器获得的JWT保存到客户端(浏览器)
         //一般可以保存到cookie或localStorage
           console.log(Date.now() + 20 * 1000)
-        store.set("accessToken",response.data.access_token,Date.now() + 60 * 60 * 1000);
+        store.set("accessToken",response.data.access_token,Date.now() + 24 * 60 * 60 * 1000);
         window.localStorage.setItem("accessToken",response.data.access_token);
           location.href="/"
       }).catch(function(error){
